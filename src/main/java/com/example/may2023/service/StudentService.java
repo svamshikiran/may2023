@@ -1,7 +1,9 @@
 package com.example.may2023.service;
 
+import com.example.may2023.kafka.KafkaProducerService;
 import com.example.may2023.model.Student;
 import com.example.may2023.repository.StudentRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
@@ -26,6 +28,9 @@ public class StudentService {
     @Autowired
     StudentRepository repo;
 
+    @Autowired
+    KafkaProducerService kafka;
+
     public List<Student> getAllStudents(){
         return repo.findAll(); //select * from student;
     }
@@ -47,8 +52,9 @@ public class StudentService {
         return repo.findByCity(city); //select * from student where city=?;
     }
 
-    public void upsert(Student student){ //UPdate or inSERT
-        repo.save(student); //insert into student values(?????);
+    public void upsert(Student student) throws JsonProcessingException { //UPdate or inSERT
+        kafka.sendSimpleMessage(student);
+        //repo.save(student); //insert into student values(?????);
         // if the record is present, it will perform update operation
         // if the record is NOT present, it will perform insert operation
     }

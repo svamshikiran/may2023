@@ -2,6 +2,7 @@ package com.example.may2023.controller;
 
 import com.example.may2023.model.Student;
 import com.example.may2023.service.StudentService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
@@ -56,13 +57,13 @@ public class StudentController {
     }
 
     @PostMapping("/add")
-    public void addStudent(@RequestBody Student student){
+    public void addStudent(@RequestBody Student student) throws JsonProcessingException {
         sService.upsert(student);
     }
 
 
     @PutMapping("/update")
-    public void updateStudent(@RequestBody Student student){
+    public void updateStudent(@RequestBody Student student) throws JsonProcessingException {
         sService.upsert(student);
     }
 

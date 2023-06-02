@@ -1,5 +1,6 @@
 package com.example.may2023.controller;
 
+import com.example.may2023.service.CalculateRestService;
 import com.example.may2023.service.CalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,14 @@ public class CalculateController {
             return new ResponseEntity<>("SECOND VALUE IS ZERO, DIVISION OPERATION CANNOT BE PERFORMED", HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(cService.divide(firstNumber, secondNumber), HttpStatus.OK);
+    }
+
+    @Autowired
+    CalculateRestService restService;
+
+    @GetMapping("/rest/add")
+    public double add(){
+        return restService.calculateAddtion();
     }
 
     //Implement the remaining four operations - ADD, SUBTRACT, MULTIPLY and MODULUS
